@@ -1,3 +1,11 @@
+/* 
+   SlowSoftWire.cpp - A Wire-like wrapper for SlowSoftI2CMaster. 
+   
+   It is derived from the Arduino Wire library and for this reason is
+   published under the terms of the GNU Lesser General Public License
+   as published by the Free Software Foundation; either version 2.1 of
+   the License, or (at your option) any later version.
+*/
 
 #include <SlowSoftWire.h>
 
