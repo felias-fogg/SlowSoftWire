@@ -14,9 +14,10 @@ private:
   uint8_t rxBufferLength;
   uint8_t transmitting;
   uint8_t error;
-  SlowSoftI2CMaster *si2c;
+  SlowSoftI2CMaster si2c;
 public:
   SlowSoftWire(uint8_t sda, uint8_t scl);
+  SlowSoftWire(uint8_t sda, uint8_t scl, bool internal_pullup);
   void begin(void);
   void end(void);
   void setClock(uint32_t _);

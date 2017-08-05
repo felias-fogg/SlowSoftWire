@@ -7,11 +7,18 @@
    the License, or (at your option) any later version.
 */
 
+/* New version (August 5, 2017)
+   - now use static variable for SlowSoftI2CMaster instance
+   - added optional parameter "internal_pullup" in constructor
+*/
+
 #include <SlowSoftWire.h>
 
-SlowSoftWire::SlowSoftWire(uint8_t sda, uint8_t scl) {
-  si2c = new SlowSoftI2CMaster(sda, scl);
-}
+SlowSoftWire::SlowSoftWire(uint8_t sda, uint8_t scl): 
+  si2c(sda, scl)  { }
+
+SlowSoftWire::SlowSoftWire(uint8_t sda, uint8_t scl, bool internal_pullup): 
+  si2c(sda, scl, internal_pullup)  { }
 
 void SlowSoftWire::begin(void) {
   rxBufferIndex = 0;
@@ -19,21 +26,17 @@ void SlowSoftWire::begin(void) {
   error = 0;
   transmitting = false;
   
-  si2c->i2c_init();
+  si2c.i2c_init();
 }
   
-void  SlowSoftWire::end(void) {
-  free(si2c);
-}
-
 void  SlowSoftWire::setClock(uint32_t _) {
 }
 
 void  SlowSoftWire::beginTransmission(uint8_t address) {
   if (transmitting) {
-    error = (si2c->i2c_rep_start((address<<1)|I2C_WRITE) ? 0 : 2);
+    error = (si2c.i2c_rep_start((address<<1)|I2C_WRITE) ? 0 : 2);
   } else {
-    error = (si2c->i2c_start((address<<1)|I2C_WRITE) ? 0 : 2);
+    error = (si2c.i2c_start((address<<1)|I2C_WRITE) ? 0 : 2);
   }
   // indicate that we are transmitting
   transmitting = 1;
@@ -47,7 +50,7 @@ uint8_t  SlowSoftWire::endTransmission(uint8_t sendStop)
 {
   uint8_t transError = error;
   if (sendStop) {
-    si2c->i2c_stop();
+    si2c.i2c_stop();
     transmitting = 0;
   }
   error = 0;
@@ -63,7 +66,7 @@ uint8_t  SlowSoftWire::endTransmission(void)
 }
 
 size_t  SlowSoftWire::write(uint8_t data) {
-  if (si2c->i2c_write(data)) {
+  if (si2c.i2c_write(data)) {
     return 1;
   } else {
     if (error == 0) error = 3;
@@ -100,17 +103,17 @@ uint8_t SlowSoftWire::requestFrom(uint8_t address, uint8_t quantity,
   if(quantity > BUFFER_LENGTH){
     quantity = BUFFER_LENGTH;
   }
-  localerror = !si2c->i2c_rep_start((address<<1) | I2C_READ);
+  localerror = !si2c.i2c_rep_start((address<<1) | I2C_READ);
   if (error == 0 && localerror) error = 2;
   // perform blocking read into buffer
   for (uint8_t cnt=0; cnt < quantity; cnt++) 
-    rxBuffer[cnt] = si2c->i2c_read(cnt == quantity-1);
+    rxBuffer[cnt] = si2c.i2c_read(cnt == quantity-1);
   // set rx buffer iterator vars
   rxBufferIndex = 0;
   rxBufferLength = quantity;
   if (sendStop) {
     transmitting = 0;
-    si2c->i2c_stop();
+    si2c.i2c_stop();
   }
   return quantity;
 }

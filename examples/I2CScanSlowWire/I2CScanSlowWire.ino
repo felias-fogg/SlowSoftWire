@@ -25,6 +25,8 @@
 //    Added waiting for the Leonardo serial communication.
 // Version 7, October 1, 2016
 //    Changed it to use the SoftWire library
+// Version 8, August 5, 2017
+//    Added third parameter for internal pullups
 //
 // This sketch tests the standard 7-bit addresses
 // Devices with higher bit address might not be seen properly.
@@ -32,7 +34,7 @@
 
 #include <SlowSoftWire.h>
 
-SlowSoftWire Wire = SlowSoftWire(A4, A5);
+SlowSoftWire Wire = SlowSoftWire(A4, A5, true);
      
 void setup()
 {
