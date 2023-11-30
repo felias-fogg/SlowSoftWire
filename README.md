@@ -1,6 +1,6 @@
 # SlowSoftWire
 
-There is now a faster and more recent library around: [SoftwareWire](https://github.com/Testato/SoftwareWire). For this reason, I will archive this repo.
+There is a more complete and recent library around: [SoftWire](https://github.com/stevemarple/SoftWire). If you are looking for an AVR-optimized library, then this one may also be a good candidate: [SoftwareWire](https://github.com/Testato/SoftwareWire). 
 
 A wrapper for SlowSoftI2CMaster emulating the functionality of the Wire library (for master clients). In order to use it, you also have to download [SlowSoftI2CMaster](https://github.com/felias-fogg/SlowSoftI2CMaster).
 
