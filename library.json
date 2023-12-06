@@ -1,0 +1,23 @@
+{
+  "name": "SlowSoftWire",
+  "keywords": "I2C",
+  "description": "local copy of SlowSoftWire",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/felias-fogg/SlowSoftWire.git"
+  },
+  "version": "1.0.0",
+  "authors":
+  [
+    {
+        "url": null,
+        "maintainer": false,
+        "email": "no idea",
+        "name": "me"
+    }
+  ],
+  "frameworks": "*",
+  "platforms": "*"
+}
+
